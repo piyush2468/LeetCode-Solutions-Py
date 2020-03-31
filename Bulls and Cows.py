@@ -1,3 +1,4 @@
+from collections import Counter
 class Solution(object):
 
 def getHint(self, secret, guess):
@@ -7,8 +8,16 @@ def getHint(self, secret, guess):
 :rtype: str
 """
 
-    cnt, common = 0, set(secret)&set(guess)
-    for c in common:
-        cnt += min(secret.count(c),guess.count(c))
-    b = sum([secret[i]==guess[i] for i in range(len(guess))])
-    return str(b) + 'A'  +str(cnt-b) + 'B'
+    bull_count = 0
+        for i in range(len(secret)):
+            if secret[i] == guess[i]:
+                bull_count += 1
+        secret_counter = Counter(secret)
+        guess_counter = Counter(guess)
+        cow_count = sum((secret_counter & guess_counter).values()) - bull_count
+        return "{0}A{1}B".format(bull_count, cow_count)
+
+
+
+
+
