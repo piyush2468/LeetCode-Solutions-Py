@@ -10,28 +10,41 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-                
-        wrongVals=[]
-        dfs(root,TreeNode(float("-inf")),wrongVals)
-        #swap the values in the 2 wrong nodes
-        wrongVals[0].val,wrongVals[1].val=wrongVals[1].val,wrongVals[0].val
+           order=[]
+		def inorder(root):
+			if not root:return
+			inorder(root.left)
+			order.append(root)
+			inorder(root.right)
+
+		inorder(root)
+		new=sorted(order,key=lambda x:x.val)
+		for idx in range(len(order)):
+			p,q=order[idx],new[idx]
+			if p!=q:
+				p.val,q.val=q.val,p.val
+				break     
         
 
 
-def dfs(root,lastVisited,wrongVals):
-    
-    if root.left:
-        lastVisited=dfs(root.left,lastVisited,wrongVals)
-    
-    if lastVisited.val>root.val: #found an out of order pair -> save them
-        if wrongVals:
-            wrongVals[1]=root
-        else:#assume in the beginning that those are only the values that need to be swapped
-            wrongVals+=[lastVisited,root]
-    
-    lastVisited=root
-    
-    if root.right:
-        lastVisited=dfs(root.right,lastVisited,wrongVals)
 
-    return lastVisited
+        
+
+
+
+    
+
+
+    
+
+
+
+
+
+    
+
+    
+
+
+
+
